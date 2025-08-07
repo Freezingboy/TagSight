@@ -1,40 +1,40 @@
 {
-  // 项目名称
+
   "name": "front",
-  // 私有项目，不会被发布到npm
+
   "private": true,
-  // 项目版本号
+
   "version": "0.0.0",
-  // 使用ES模块系统
+
   "type": "module",
   
-  // 项目脚本命令
+
   "scripts": {
-    // 开发服务器启动命令
+
     "dev": "vite",
-    // 生产环境构建命令
+
     "build": "vue-tsc -b && vite build",
-    // 预览构建结果命令
+
     "preview": "vite preview"
   },
   
-  // 生产环境依赖
+
   "dependencies": {
-    // Vue.js 3框架
+
     "vue": "^3.5.17"
   },
   
-  // 开发环境依赖
+
   "devDependencies": {
-    // Vite的Vue插件，用于处理.vue文件
+  
     "@vitejs/plugin-vue": "^6.0.0",
-    // Vue的TypeScript配置
+ 
     "@vue/tsconfig": "^0.7.0",
-    // TypeScript编译器
+
     "typescript": "~5.8.3",
-    // 现代前端构建工具
+ 
     "vite": "^7.0.4",
-    // Vue的TypeScript编译器
+
     "vue-tsc": "^2.2.12"
   }
 }
