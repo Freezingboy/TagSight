@@ -1,0 +1,117 @@
+/* ==================== 全局CSS变量和基础样式 ==================== */
+
+/* 根元素样式 - 定义全局CSS变量和基础字体设置 */
+:root {
+  /* 字体设置 */
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5; /* 行高 */
+  font-weight: 400; /* 字体粗细 */
+
+  /* 颜色方案 - 支持明暗主题 */
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87); /* 默认文字颜色 */
+  background-color: #242424; /* 默认背景颜色 */
+
+  /* 字体渲染优化 */
+  font-synthesis: none; /* 禁止字体合成 */
+  text-rendering: optimizeLegibility; /* 优化文字可读性 */
+  -webkit-font-smoothing: antialiased; /* WebKit字体平滑 */
+  -moz-osx-font-smoothing: grayscale; /* Firefox字体平滑 */
+}
+
+/* ==================== 链接样式 ==================== */
+
+/* 链接基础样式 */
+a {
+  font-weight: 500;
+  color: #646cff; /* 链接颜色 */
+  text-decoration: inherit; /* 继承父元素的文字装饰 */
+}
+
+/* 链接悬停效果 */
+a:hover {
+  color: #535bf2; /* 悬停时的颜色 */
+}
+
+/* ==================== 页面基础样式 ==================== */
+
+/* 页面主体样式 */
+body {
+  margin: 0; /* 移除默认边距 */
+  display: flex; /* 使用弹性布局 */
+  place-items: center; /* 居中对齐 */
+  min-width: 320px; /* 最小宽度 */
+  min-height: 100vh; /* 最小高度为视口高度 */
+}
+
+/* ==================== 标题样式 ==================== */
+
+/* 一级标题样式 */
+h1 {
+  font-size: 3.2em; /* 字体大小 */
+  line-height: 1.1; /* 行高 */
+}
+
+/* ==================== 按钮样式 ==================== */
+
+/* 按钮基础样式 */
+button {
+  border-radius: 8px; /* 圆角 */
+  border: 1px solid transparent; /* 透明边框 */
+  padding: 0.6em 1.2em; /* 内边距 */
+  font-size: 1em; /* 字体大小 */
+  font-weight: 500; /* 字体粗细 */
+  font-family: inherit; /* 继承父元素字体 */
+  background-color: #1a1a1a; /* 背景颜色 */
+  cursor: pointer; /* 鼠标指针 */
+  transition: border-color 0.25s; /* 边框颜色过渡动画 */
+}
+
+/* 按钮悬停效果 */
+button:hover {
+  border-color: #646cff; /* 悬停时的边框颜色 */
+}
+
+/* 按钮焦点状态 */
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color; /* 焦点轮廓 */
+}
+
+/* ==================== 卡片样式 ==================== */
+
+/* 卡片容器样式 */
+.card {
+  padding: 2em; /* 内边距 */
+}
+
+/* ==================== 应用容器样式 ==================== */
+
+/* 应用根容器样式 */
+#app {
+  max-width: 1280px; /* 最大宽度 */
+  margin: 0 auto; /* 水平居中 */
+  padding: 2rem; /* 内边距 */
+  text-align: center; /* 文字居中 */
+}
+
+/* ==================== 响应式设计 ==================== */
+
+/* 亮色主题适配 */
+@media (prefers-color-scheme: light) {
+  /* 亮色主题下的根元素样式 */
+  :root {
+    color: #213547; /* 亮色主题文字颜色 */
+    background-color: #ffffff; /* 亮色主题背景颜色 */
+  }
+  
+  /* 亮色主题下的链接悬停效果 */
+  a:hover {
+    color: #747bff; /* 亮色主题链接悬停颜色 */
+  }
+  
+  /* 亮色主题下的按钮样式 */
+  button {
+    background-color: #f9f9f9; /* 亮色主题按钮背景 */
+  }
+}
