@@ -454,8 +454,8 @@ onUnmounted(() => {
 
 /* 暗色主题样式覆盖 */
 .file-manager.dark {
-  background-color: #1a1a1a; /* 暗色主题背景 */
-  color: #ffffff;            /* 暗色主题文字颜色 */
+  background-color: #111827; /* 暗色主题背景 */
+  color: #e5e7eb;           /* 暗色主题文字颜色 */
 }
 
 /* ==================== 顶部导航栏样式 ==================== */
@@ -472,8 +472,8 @@ onUnmounted(() => {
 
 /* 暗色主题导航栏样式 */
 .file-manager.dark .header {
-  background-color: #2d2d2d;
-  border-bottom: 1px solid #404040;
+  background-color: #1f2937;
+  border-bottom: 1px solid #374151;
 }
 
 /* 导航栏左侧区域 */
@@ -498,7 +498,7 @@ onUnmounted(() => {
 
 /* 暗色主题标题颜色 */
 .file-manager.dark .header-left h1 {
-  color: #ffffff;
+  color: #e5e7eb;
 }
 
 /* 导航栏右侧区域 */
@@ -579,8 +579,8 @@ onUnmounted(() => {
 
 /* 暗色主题下的下拉框显示区域 */
 .file-manager.dark .select-display {
-  background-color: #1f2937;
-  border-color: #374151;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-color: #475569;
   color: #e5e7eb;
 }
 
@@ -592,8 +592,8 @@ onUnmounted(() => {
 
 /* 暗色主题下的下拉框悬停效果 */
 .file-manager.dark .select-display:hover {
-  border-color: #4f46e5;
-  background-color: #2d2d2d;
+  border-color: #6366f1;
+  background: linear-gradient(135deg, #334155 0%, #475569 100%);
 }
 
 /* 下拉箭头图标 */
@@ -620,8 +620,8 @@ onUnmounted(() => {
 
 /* 暗色主题下的下拉菜单 */
 .file-manager.dark .dropdown-menu {
-  background-color: #1f2937;
-  border-color: #374151;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-color: #475569;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
@@ -649,7 +649,7 @@ onUnmounted(() => {
 
 /* 暗色主题下的下拉菜单项悬停效果 */
 .file-manager.dark .dropdown-item:hover {
-  background-color: #374151;
+  background: linear-gradient(135deg, #334155 0%, #475569 100%);
 }
 
 /* 激活状态的下拉菜单项 */
@@ -660,7 +660,7 @@ onUnmounted(() => {
 
 /* 暗色主题下的激活状态下拉菜单项 */
 .file-manager.dark .dropdown-item.active {
-  background-color: #4f46e5;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
   color: #ffffff;
 }
 
@@ -760,7 +760,7 @@ onUnmounted(() => {
 
 /* 暗色主题主内容区域 */
 .file-manager.dark .main-area {
-  background-color: #1a1a1a;
+  background-color: #111827;
 }
 
 /* ==================== 文件管理页面样式 ==================== */
@@ -903,30 +903,30 @@ onUnmounted(() => {
 /* 暗色主题下的文字颜色 */
 .file-manager.dark .main-title h2,
 .file-manager.dark .tags-header h2 {
-  color: #ffffff;
+  color: #e5e7eb;
 }
 
 /* 暗色主题下的文件数量 */
 .file-manager.dark .file-count {
-  color: #9ca3af;
-  background-color: #374151;
+  color: #d1d5db;
+  background-color: #2d2d2d;
 }
 
 /* 暗色主题下的视图切换按钮 */
 .file-manager.dark .view-btn {
-  background-color: #374151;
-  border-color: #4b5563;
-  color: #9ca3af;
+  background-color: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
 }
 
 .file-manager.dark .view-btn:hover {
-  background-color: #4b5563;
-  border-color: #6b7280;
+  background-color: #2d2d2d;
+  border-color: #4f46e5;
 }
 
 .file-manager.dark .view-btn.active {
-  background-color: #6366f1;
-  border-color: #6366f1;
+  background-color: #4f46e5;
+  border-color: #4f46e5;
   color: white;
 }
 </style> 

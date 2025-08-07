@@ -72,6 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
+  padding: 1rem;
 }
 
 .tag-card {
@@ -91,19 +92,24 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的标签卡片 */
 .tags-grid.dark .tag-card {
-  background-color: #2d2d2d;
-  border-color: #404040;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+  border-color: #475569 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
 .tag-card:hover {
   background-color: #f8fafc;
   border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* 暗色主题下的标签卡片悬停效果 */
 .tags-grid.dark .tag-card:hover {
-  background-color: #404040;
-  border-color: #525252;
+  background: linear-gradient(135deg, #334155 0%, #475569 100%) !important;
+  border-color: #6366f1 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5) !important;
 }
 
 .tag-card:hover .tag-actions {
@@ -116,6 +122,12 @@ const props = withDefaults(defineProps<Props>(), {
   height: 24px;
   border-radius: 4px;
   flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 暗色主题下的标签颜色 */
+.tags-grid.dark .tag-color {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .tag-content {
@@ -131,6 +143,12 @@ const props = withDefaults(defineProps<Props>(), {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #1f2937;
+}
+
+/* 暗色主题下的标签标题 */
+.tags-grid.dark .tag-content h3 {
+  color: #ffffff !important;
 }
 
 .tag-count {
@@ -142,7 +160,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的标签数量 */
 .tags-grid.dark .tag-count {
-  color: #9ca3af;
+  color: #ffffff !important;
 }
 
 .tag-actions {
@@ -205,34 +223,34 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的操作按钮 */
 .tags-grid.dark .action-btn {
-  color: #9ca3af;
+  color: #ffffff !important;
 }
 
 .tags-grid.dark .action-btn:hover {
-  background-color: rgba(59, 130, 246, 0.2);
+  background-color: rgba(79, 70, 229, 0.2);
 }
 
 .tags-grid.dark .action-btn.view-btn {
-  color: #60a5fa;
+  color: #ffffff !important;
 }
 
 .tags-grid.dark .action-btn.view-btn:hover {
-  background-color: rgba(96, 165, 250, 0.2);
+  background-color: rgba(99, 102, 241, 0.2);
 }
 
 .tags-grid.dark .action-btn.edit-btn {
-  color: #fbbf24;
+  color: #ffffff !important;
 }
 
 .tags-grid.dark .action-btn.edit-btn:hover {
-  background-color: rgba(251, 191, 36, 0.2);
+  background-color: rgba(245, 158, 11, 0.2);
 }
 
 .tags-grid.dark .action-btn.delete-btn {
-  color: #f87171;
+  color: #ffffff !important;
 }
 
 .tags-grid.dark .action-btn.delete-btn:hover {
-  background-color: rgba(248, 113, 113, 0.2);
+  background-color: rgba(239, 68, 68, 0.2);
 }
 </style> 

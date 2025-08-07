@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的分页组件 */
 .pagination.dark {
-  border-top: 1px solid #404040;
+  border-top: 1px solid #475569;
 }
 
 .pagination-info {
@@ -59,7 +59,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的分页信息 */
 .pagination.dark .pagination-info {
-  color: #9ca3af;
+  color: #ffffff !important;
 }
 
 .pagination-controls {
@@ -84,15 +84,15 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的分页按钮 */
 .pagination.dark .page-btn {
-  background-color: #404040;
-  border-color: #525252;
-  color: #9ca3af;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+  border-color: #475569 !important;
+  color: #ffffff !important;
 }
 
 .page-btn.active {
-  background-color: #3b82f6;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
   color: white;
-  border-color: #3b82f6;
+  border-color: #6366f1;
 }
 
 .page-btn:hover {
@@ -102,8 +102,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的分页按钮悬停效果 */
 .pagination.dark .page-btn:hover {
-  background-color: #525252;
-  border-color: #6b7280;
+  background: linear-gradient(135deg, #334155 0%, #475569 100%) !important;
+  border-color: #6366f1 !important;
 }
 
 .page-dots {
@@ -114,6 +114,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的分页省略号 */
 .pagination.dark .page-dots {
-  color: #9ca3af;
+  color: #ffffff !important;
 }
 </style> 

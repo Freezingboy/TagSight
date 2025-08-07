@@ -132,36 +132,30 @@ const handleFileCardClick = (fileName: string) => {
 }
 
 /* 暗色主题下的文件卡片 */
-.file-grid.dark .file-card {
-  background-color: #2d2d2d;
-  border-color: #404040;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.file-card:hover {
-  background-color: #f8fafc;
-  border-color: #cbd5e1;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.file-grid.dark .file-card,
+div.file-grid.dark .file-card {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+  border-color: #475569 !important;
+  color: #fff !important;
 }
 
 /* 暗色主题下的文件卡片悬停效果 */
-.file-grid.dark .file-card:hover {
-  background-color: #404040;
-  border-color: #525252;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+.file-grid.dark .file-card:hover,
+div.file-grid.dark .file-card:hover {
+  background: linear-gradient(135deg, #334155 0%, #475569 100%) !important;
+  border-color: #6366f1 !important;
+  color: #fff !important;
 }
 
-.file-card:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  transition: all 0.1s ease;
+/* 暗色主题下的文件名和信息文字 */
+.file-grid.dark .file-info h4,
+.file-grid.dark .file-info p,
+div.file-grid.dark .file-info h4,
+div.file-grid.dark .file-info p {
+  color: #fff !important;
 }
 
-/* 暗色主题下的文件卡片激活效果 */
-.file-grid.dark .file-card:active {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-}
+/* 移除夜间模式下缩略图变黑的样式，保留彩色缩略图 */
 
 .file-thumbnail {
   width: 100%;
@@ -176,10 +170,7 @@ const handleFileCardClick = (fileName: string) => {
   transition: background-color 0.3s ease;
 }
 
-/* 暗色主题下的文件缩略图 */
-.file-grid.dark .file-thumbnail {
-  background-color: #404040;
-}
+/* 暗色主题下的文件缩略图 - 保持彩色 */
 
 .file-thumbnail img {
   width: 100%;
@@ -226,7 +217,8 @@ const handleFileCardClick = (fileName: string) => {
 }
 
 /* 暗色主题下的文件信息文字 */
-.file-grid.dark .file-info p {
-  color: #9ca3af;
+.file-grid.dark .file-info p,
+div.file-grid.dark .file-info p {
+  color: #ffffff !important;
 }
 </style> 

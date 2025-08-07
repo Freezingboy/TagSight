@@ -430,16 +430,16 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题变量定义 */
 .homepage.dark {
-  --bg-color: #1f2937;
-  --text-color: #f9fafb;
+  --bg-color: #111827;
+  --text-color: #e5e7eb;
   --title-color: #f9fafb;
-  --text-secondary: #9ca3af;
-  --primary-color: #6366f1;
+  --text-secondary: #d1d5db;
+  --primary-color: #4f46e5;
   --primary-light: #312e81;
-  --card-bg: #374151;
-  --border-color: #4b5563;
-  --border-light: #4b5563;
-  --code-bg: #374151;
+  --card-bg: #1f2937;
+  --border-color: #374151;
+  --border-light: #374151;
+  --code-bg: #2d2d2d;
   --code-color: #e5e7eb;
 }
 
@@ -468,6 +468,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题标题颜色覆盖 */
 .homepage.dark .card-header h2 {
-  color: #f9fafb;
+  color: #e5e7eb;
 }
 </style> 

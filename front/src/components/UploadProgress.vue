@@ -35,8 +35,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的上传进度条 */
 .upload-progress.dark {
-  background-color: #2d2d2d;
-  border-color: #404040;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+  border-color: #475569 !important;
 }
 
 .progress-info {
@@ -44,11 +44,22 @@ const props = withDefaults(defineProps<Props>(), {
   justify-content: space-between;
   margin-bottom: 0.5rem;
   font-size: 0.875rem;
+  color: #1f2937;
+}
+
+/* 暗色主题下的进度信息文字 */
+.upload-progress.dark .progress-info {
+  color: #ffffff !important;
 }
 
 .progress-percentage {
   color: #3b82f6;
   font-weight: 600;
+}
+
+/* 暗色主题下的进度百分比文字 */
+.upload-progress.dark .progress-percentage {
+  color: #ffffff !important;
 }
 
 .progress-bar {
@@ -61,7 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* 暗色主题下的进度条背景 */
 .progress-bar.dark {
-  background-color: #404040;
+  background: linear-gradient(90deg, #475569 0%, #64748b 100%) !important;
 }
 
 .progress-fill {

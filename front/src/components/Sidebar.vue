@@ -247,13 +247,13 @@ const handleUserClick = () => {
 
 /* 暗色主题下的用户信息 */
 .sidebar.dark .user-info {
-  background-color: #374151;
-  border-color: #4b5563;
+  background-color: #2d2d2d;
+  border-color: #374151;
 }
 
 .sidebar.dark .user-info:hover {
-  background-color: #4b5563;
-  border-color: #6b7280;
+  background-color: #374151;
+  border-color: #4f46e5;
 }
 
 /* 用户头像 */
@@ -301,7 +301,7 @@ const handleUserClick = () => {
 
 /* 暗色主题下的用户姓名 */
 .sidebar.dark .user-name {
-  color: #f9fafb;
+  color: #e5e7eb;
 }
 
 /* 用户角色 */
@@ -313,7 +313,7 @@ const handleUserClick = () => {
 
 /* 暗色主题下的用户角色 */
 .sidebar.dark .user-role {
-  color: #9ca3af;
+  color: #d1d5db;
 }
 
 /* ==================== 响应式设计 ==================== */

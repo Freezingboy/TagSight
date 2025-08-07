@@ -290,8 +290,8 @@ onUnmounted(() => {
 
 /* 暗色主题下的头部样式 */
 .header.dark {
-  background-color: #1f2937;
-  border-bottom-color: #374151;
+  background-color: #111827;
+  border-bottom-color: #1f2937;
 }
 
 .search-container {
@@ -316,8 +316,8 @@ onUnmounted(() => {
 
 /* 暗色主题下的搜索栏 */
 .search-bar.dark {
-  background-color: #374151;
-  border-color: #525252;
+  background-color: #1f2937;
+  border-color: #374151;
 }
 
 .search-bar:focus-within {
@@ -327,8 +327,8 @@ onUnmounted(() => {
 
 /* 暗色主题下的搜索栏焦点状态 */
 .search-bar.dark:focus-within {
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
 .search-input {
@@ -342,7 +342,7 @@ onUnmounted(() => {
 
 /* 暗色主题下的搜索输入框 */
 .search-input.dark {
-  color: #ffffff;
+  color: #e5e7eb;
 }
 
 .search-input::placeholder {
@@ -351,7 +351,7 @@ onUnmounted(() => {
 
 /* 暗色主题下的搜索输入框占位符 */
 .search-input.dark::placeholder {
-  color: #6b7280;
+  color: #9ca3af;
 }
 
 .header-filters {
@@ -381,9 +381,9 @@ onUnmounted(() => {
 
 /* 暗色主题下的下拉按钮 */
 .dropdown-btn.dark {
-  background-color: #374151;
-  border-color: #525252;
-  color: #ffffff;
+  background-color: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
 }
 
 .dropdown-btn:hover {
@@ -392,7 +392,7 @@ onUnmounted(() => {
 
 /* 暗色主题下的下拉按钮悬停效果 */
 .dropdown-btn.dark:hover {
-  border-color: #60a5fa;
+  border-color: #4f46e5;
 }
 
 .dropdown-menu {
@@ -411,9 +411,9 @@ onUnmounted(() => {
 
 /* 暗色主题下的下拉菜单 */
 .dropdown-menu.dark {
-  background-color: #2d2d2d;
-  border-color: #525252;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .dropdown-item {
@@ -430,8 +430,8 @@ onUnmounted(() => {
 
 /* 暗色主题下的下拉菜单项 */
 .dropdown-item.dark {
-  color: #ffffff;
-  border-bottom-color: #525252;
+  color: #e5e7eb;
+  border-bottom-color: #374151;
 }
 
 .dropdown-item:last-child {
@@ -444,7 +444,7 @@ onUnmounted(() => {
 
 /* 暗色主题下的下拉菜单项悬停效果 */
 .dropdown-item.dark:hover {
-  background-color: #404040;
+  background-color: #374151;
 }
 
 .header-actions {
@@ -478,12 +478,12 @@ onUnmounted(() => {
 /* 暗色主题下的上传和新建标签按钮 */
 .upload-btn.dark,
 .new-tag-btn.dark {
-  background-color: #6366f1;
+  background-color: #4f46e5;
 }
 
 .upload-btn.dark:hover,
 .new-tag-btn.dark:hover {
-  background-color: #4f46e5;
+  background-color: #4338ca;
 }
 
 .theme-toggle-btn {
@@ -502,8 +502,8 @@ onUnmounted(() => {
 
 /* 暗色主题下的主题切换按钮 */
 .theme-toggle-btn.dark {
-  border-color: #525252;
-  color: #ffffff;
+  border-color: #374151;
+  color: #e5e7eb;
 }
 
 .theme-toggle-btn:hover {
@@ -513,7 +513,7 @@ onUnmounted(() => {
 
 /* 暗色主题下的主题切换按钮悬停效果 */
 .theme-toggle-btn.dark:hover {
-  background-color: #404040;
-  border-color: #60a5fa;
+  background-color: #374151;
+  border-color: #4f46e5;
 }
 </style> 
