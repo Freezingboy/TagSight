@@ -1,1 +1,3 @@
 .idea
+# 忽略 static 文件夹及其所有内容
+static/

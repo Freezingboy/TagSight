@@ -12,6 +12,7 @@ var (
 	ServerOption *ServerSetting
 	MysqlOption  *MysqlSetting
 	LogOption    *logger.LogSetting
+	Jwt          *JWT
 )
 
 type ServerSetting struct {
@@ -28,6 +29,12 @@ type MysqlSetting struct {
 	DbName       string
 	MaxIdleConns int
 	MaxOpenConns int
+}
+
+type JWT struct {
+	Secret string
+	Ttl    int
+	Name   string
 }
 
 func (m *MysqlSetting) Dsn() string {
@@ -75,6 +82,11 @@ func InitConfig(path string) {
 	}
 
 	err = ReadSection("log", &LogOption)
+	if err != nil {
+		panic(err)
+	}
+
+	err = ReadSection("Jwt", &Jwt)
 	if err != nil {
 		panic(err)
 	}

@@ -44,4 +44,3 @@ func ParseToken(token string, secret string) (*CustomPayload, error) {
 	}
 	return nil, errors.New("invalid token")
 }
-
