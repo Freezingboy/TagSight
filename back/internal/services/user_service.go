@@ -33,21 +33,8 @@ func NewUserService(userDAO *dao.UserDAO) *UserService {
 	}
 }
 
-// RegisterRequest 用户注册请求
-type RegisterRequest struct {
-	Username string `json:"username" binding:"required,min=1,max=50"`
-	Password string `json:"password" binding:"required,min=6"`
-}
-
-// RegisterResponse 用户注册响应
-type RegisterResponse struct {
-	ID         uint64    `json:"id"`
-	Username   string    `json:"username"`
-	CreateTime time.Time `json:"createTime"`
-}
-
 // Register 用户注册
-func (s *UserService) Register(req *RegisterRequest) (*RegisterResponse, error) {
+func (s *UserService) Register(req *request.RegisterRequest) (*response.RegisterResponse, error) {
 	// 检查用户名是否已存在
 	existingUser, err := s.userDAO.GetByUsername(req.Username)
 	if err != nil {
@@ -73,7 +60,7 @@ func (s *UserService) Register(req *RegisterRequest) (*RegisterResponse, error) 
 	}
 
 	// 返回响应
-	return &RegisterResponse{
+	return &response.RegisterResponse{
 		ID:         user.ID,
 		Username:   user.Username,
 		CreateTime: time.Now(),

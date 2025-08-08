@@ -13,6 +13,8 @@ import (
 
 	"back/internal/dao"
 	"back/internal/models"
+
+	"gorm.io/gorm"
 )
 
 var (
@@ -40,7 +42,6 @@ func NewFileService(fileDAO *dao.FileDAO, fileTagRelationDAO *dao.FileTagRelatio
 	}
 }
 
-// UploadFile 上传多个文件
 func (s *FileService) UploadFile(files []*multipart.FileHeader, userID uint64) ([]*response.FileResponse, error) {
 	var responses []*response.FileResponse
 
@@ -50,16 +51,13 @@ func (s *FileService) UploadFile(files []*multipart.FileHeader, userID uint64) (
 		return nil, err
 	}
 
-	// 遍历所有上传的文件
 	for _, fileHeader := range files {
-		// 打开文件
 		src, err := fileHeader.Open()
 		if err != nil {
 			return nil, fmt.Errorf("failed to open uploaded file: %w", err)
 		}
 		defer src.Close()
 
-		// 获取文件名和扩展
 		fileName := fileHeader.Filename
 		fileExt := filepath.Ext(fileName)
 		fileType := strings.TrimPrefix(fileExt, ".")
@@ -67,50 +65,39 @@ func (s *FileService) UploadFile(files []*multipart.FileHeader, userID uint64) (
 			fileType = "unknown"
 		}
 
-		// 使用时间戳确保文件名唯一
-		timestamp := time.Now().UnixNano()
-		storedFileName := fmt.Sprintf("%d_%s", timestamp, fileName)
-		filePath := filepath.Join(userUploadDir, storedFileName)
-		relativePath := filepath.Join("/static", fmt.Sprintf("user%d", userID), storedFileName)
-
-		// 检查文件路径是否已存在
-		existingFile, err := s.fileDAO.GetByPath(relativePath)
+		// 生成唯一文件名
+		storedFileName, err := s.generateUniqueFileName(userUploadDir, fileName)
 		if err != nil {
-			return nil, err
-		}
-		if existingFile != nil {
-			return nil, fmt.Errorf("file already exists: %s", relativePath)
+			return nil, fmt.Errorf("failed to generate unique file name: %w", err)
 		}
 
-		// 创建目标文件
+		filePath := filepath.Join(userUploadDir, storedFileName)
+		relativePath := filepath.Join("static", fmt.Sprintf("user%d", userID), storedFileName)
+
 		dst, err := os.Create(filePath)
 		if err != nil {
 			return nil, err
 		}
 
-		// 拷贝内容
 		if _, err = io.Copy(dst, src); err != nil {
 			dst.Close()
 			return nil, err
 		}
 		dst.Close()
 
-		// 创建数据库记录
 		file := &models.File{
 			UserID:     userID,
-			Name:       fileName,
+			Name:       storedFileName,
 			Size:       int(fileHeader.Size),
 			Type:       fileType,
 			Path:       relativePath,
 			UploadTime: time.Now(),
 		}
 		if err := s.fileDAO.Create(file); err != nil {
-			// 删除已上传的文件
 			_ = os.Remove(filePath)
 			return nil, err
 		}
 
-		// 构建响应
 		resp := &response.FileResponse{
 			ID:         file.ID,
 			Name:       file.Name,
@@ -202,18 +189,54 @@ func (s *FileService) DeleteFile(fileID, userID uint64) error {
 		return ErrFileNotFound
 	}
 
-	// 删除文件标签关联
-	if err := s.fileTagRelationDAO.DeleteByFileID(fileID, userID); err != nil {
-		return err
-	}
-
-	// 删除文件记录
-	if err := s.fileDAO.Delete(fileID, userID); err != nil {
-		return err
-	}
-
-	// 删除物理文件
+	// 获取物理文件路径
 	filePath := filepath.Join(".", file.Path)
 
-	return os.Remove(filePath)
+	// 开启事务
+	err = s.fileDAO.DB.Transaction(func(tx *gorm.DB) error {
+		// 删除文件标签关联
+		if err := s.fileTagRelationDAO.DeleteByFileID(fileID, userID); err != nil {
+			return err
+		}
+
+		// 删除文件记录
+		if err := s.fileDAO.Delete(fileID, userID); err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return err
+	}
+
+	// 事务成功后删除物理文件
+	err = os.Remove(filePath)
+	if err != nil && !os.IsNotExist(err) {
+		// 只有当错误不是"文件不存在"时才返回错误
+		return fmt.Errorf("failed to delete physical file: %w", err)
+	}
+	return nil
+}
+
+func (s *FileService) generateUniqueFileName(dir, fileName string) (string, error) {
+	fileExt := filepath.Ext(fileName)
+	fileNameWithoutExt := strings.TrimSuffix(fileName, fileExt)
+
+	for i := 0; ; i++ {
+		var currentFileName string
+		if i == 0 {
+			currentFileName = fileName
+		} else {
+			currentFileName = fmt.Sprintf("%s%d%s", fileNameWithoutExt, i, fileExt)
+		}
+
+		filePath := filepath.Join(dir, currentFileName)
+		if _, err := os.Stat(filePath); os.IsNotExist(err) {
+			return currentFileName, nil
+		} else if err != nil {
+			return "", err
+		}
+	}
 }

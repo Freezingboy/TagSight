@@ -35,7 +35,7 @@ func NewUserController(userService *services.UserService) *UserController {
 // @Failure 500 {object} Response "服务器错误"
 // @Router /users/register [post]
 func (c *UserController) Register(ctx *gin.Context) {
-	var req services.RegisterRequest
+	var req request.RegisterRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		common.ResponseError(ctx, http.StatusBadRequest, "参数错误: "+err.Error())
 		return

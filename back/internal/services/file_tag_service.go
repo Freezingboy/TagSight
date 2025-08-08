@@ -4,6 +4,7 @@ import (
 	"back/api/request"
 	"back/api/response"
 	"errors"
+	"gorm.io/gorm"
 
 	"back/internal/dao"
 	"back/internal/models"
@@ -34,40 +35,50 @@ func NewFileTagService(fileTagRelationDAO *dao.FileTagRelationDAO, fileDAO *dao.
 
 // AddTagToFile 为文件添加标签
 func (s *FileTagService) AddTagToFile(req *request.FileTagRequest, userID uint64) (*response.FileTagResponse, error) {
-	// 检查文件是否存在且属于当前用户
-	file, err := s.fileDAO.GetByID(req.FileID, userID)
-	if err != nil {
-		return nil, err
-	}
-	if file == nil {
-		return nil, ErrFileNotFound
-	}
+	// 开启事务
+	var newRelation *models.FileTagRelation
+	err := s.fileTagRelationDAO.DB.Transaction(func(tx *gorm.DB) error {
+		// 检查文件是否存在且属于当前用户
+		file, err := s.fileDAO.GetByID(req.FileID, userID)
+		if err != nil {
+			return err
+		}
+		if file == nil {
+			return ErrFileNotFound
+		}
 
-	// 检查标签是否存在且属于当前用户
-	tag, err := s.tagDAO.GetByID(req.TagID, userID)
-	if err != nil {
-		return nil, err
-	}
-	if tag == nil {
-		return nil, ErrTagNotFound
-	}
+		// 检查标签是否存在且属于当前用户
+		tag, err := s.tagDAO.GetByID(req.TagID, userID)
+		if err != nil {
+			return err
+		}
+		if tag == nil {
+			return ErrTagNotFound
+		}
 
-	// 检查关联是否已存在
-	relation, err := s.fileTagRelationDAO.GetByFileAndTag(req.FileID, req.TagID, userID)
-	if err != nil {
-		return nil, err
-	}
-	if relation != nil {
-		return nil, ErrFileTagRelationExists
-	}
+		// 检查关联是否已存在
+		relation, err := s.fileTagRelationDAO.GetByFileAndTag(req.FileID, req.TagID, userID)
+		if err != nil {
+			return err
+		}
+		if relation != nil {
+			return ErrFileTagRelationExists
+		}
 
-	// 创建关联
-	newRelation := &models.FileTagRelation{
-		UserID: userID,
-		FileID: req.FileID,
-		TagID:  req.TagID,
-	}
-	if err := s.fileTagRelationDAO.Create(newRelation); err != nil {
+		// 创建关联
+		newRelation = &models.FileTagRelation{
+			UserID: userID,
+			FileID: req.FileID,
+			TagID:  req.TagID,
+		}
+		if err := s.fileTagRelationDAO.Create(newRelation); err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
 		return nil, err
 	}
 
@@ -81,17 +92,20 @@ func (s *FileTagService) AddTagToFile(req *request.FileTagRequest, userID uint64
 
 // RemoveTagFromFile 从文件移除标签
 func (s *FileTagService) RemoveTagFromFile(req *request.FileTagRequest, userID uint64) error {
-	// 检查关联是否存在
-	relation, err := s.fileTagRelationDAO.GetByFileAndTag(req.FileID, req.TagID, userID)
-	if err != nil {
-		return err
-	}
-	if relation == nil {
-		return ErrFileTagRelationNotFound
-	}
+	// 开启事务
+	return s.fileTagRelationDAO.DB.Transaction(func(tx *gorm.DB) error {
+		// 检查关联是否存在
+		relation, err := s.fileTagRelationDAO.GetByFileAndTag(req.FileID, req.TagID, userID)
+		if err != nil {
+			return err
+		}
+		if relation == nil {
+			return ErrFileTagRelationNotFound
+		}
 
-	// 删除关联
-	return s.fileTagRelationDAO.Delete(req.FileID, req.TagID, userID)
+		// 删除关联
+		return s.fileTagRelationDAO.Delete(req.FileID, req.TagID, userID)
+	})
 }
 
 // GetFileTags 获取文件的标签列表

@@ -4,6 +4,7 @@ import (
 	"back/api/request"
 	"back/api/response"
 	"errors"
+	"gorm.io/gorm"
 
 	"back/internal/dao"
 	"back/internal/models"
@@ -135,11 +136,20 @@ func (s *TagService) DeleteTag(tagID uint64, userID uint64) error {
 		return ErrTagNotFound
 	}
 
-	// 删除标签关联
-	if err := s.fileTagRelationDAO.DeleteByTagID(tagID, userID); err != nil {
-		return err
-	}
+	// 开启事务
+	err = s.tagDAO.DB.Transaction(func(tx *gorm.DB) error {
+		// 删除标签关联
+		if err := s.fileTagRelationDAO.DeleteByTagID(tagID, userID); err != nil {
+			return err
+		}
 
-	// 删除标签
-	return s.tagDAO.Delete(tagID, userID)
+		// 删除标签
+		if err := s.tagDAO.Delete(tagID, userID); err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	return err
 }
