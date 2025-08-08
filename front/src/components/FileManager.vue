@@ -10,11 +10,18 @@
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
           <polyline points="9,22 9,12 15,12 15,22"/>
         </svg>
+        <svg v-else-if="selectedSidebarItem === 'ai-assistant'" class="ai-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+        </svg>
         <svg v-else class="folder-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.89l-.812-1.22A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
         </svg>
         <!-- 动态标题 - 根据当前页面显示不同标题 -->
-        <h1>{{ selectedSidebarItem === 'home' ? '首页' : '文件管理系统' }}</h1>
+        <h1>{{ 
+          selectedSidebarItem === 'home' ? '首页' : 
+          selectedSidebarItem === 'ai-assistant' ? 'AI 助手' : 
+          '文件管理系统' 
+        }}</h1>
       </div>
       
       <!-- 右侧区域 - 搜索栏和操作按钮 -->
@@ -155,6 +162,16 @@
           </svg>
           {{ isDarkTheme ? '开灯' : '关灯' }}
         </button>
+        
+        <!-- 登出按钮 -->
+        <button class="logout-btn" @click="handleLogout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16,17 21,12 16,7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          登出
+        </button>
       </div>
     </header>
 
@@ -219,13 +236,29 @@
 
         <!-- 标签管理页面 -->
         <div v-if="selectedSidebarItem === 'tags'" class="tags-page">
-          <div class="tags-header">
-            <h2>标签管理</h2>
+          <TagDetailPage 
+            v-if="showTagDetail"
+            :isDarkTheme="isDarkTheme"
+            :tagId="currentTagId"
+            @back="handleTagDetailBack"
+            @file-click="handleFileCardClick"
+          />
+          <div v-else>
+            <div class="tags-header">
+              <h2>标签管理</h2>
+            </div>
+            <TagGrid 
+              :isDarkTheme="isDarkTheme" 
+              @tag-click="handleTagClick"
+            />
           </div>
-          
-          <!-- 标签网格组件 -->
-          <TagGrid :isDarkTheme="isDarkTheme" />
         </div>
+
+        <!-- AI助手页面 -->
+        <AIAssistant 
+          v-if="showAIAssistant"
+          :isDarkTheme="isDarkTheme"
+        />
       </main>
     </div>
   </div>
@@ -233,14 +266,16 @@
 
 <script setup lang="ts">
 // 导入Vue 3的组合式API
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 // 导入子组件
 import Sidebar from './Sidebar.vue'
 import FileGrid from './FileGrid.vue'
 import TagGrid from './TagGrid.vue'
+import TagDetailPage from './TagDetailPage.vue'
 import Pagination from './Pagination.vue'
 import UploadProgress from './UploadProgress.vue'
 import Homepage from './Homepage.vue'
+import AIAssistant from './AIAssistant.vue'
 
 // ==================== 响应式数据定义 ====================
 
@@ -252,6 +287,13 @@ const selectedCategory = ref('all')
 
 // 主题模式状态 - 控制明暗主题切换
 const isDarkTheme = ref(false)
+
+// 标签详情页面状态
+const currentTagId = ref('')
+const showTagDetail = ref(false)
+
+// AI助手页面状态
+const showAIAssistant = ref(false)
 
 // ==================== 配置数据 ====================
 
@@ -405,6 +447,34 @@ const handleFileCardClick = (fileName: string) => {
 }
 
 /**
+ * 处理标签点击事件
+ * @param tagId 标签ID
+ */
+const handleTagClick = (tagId: string) => {
+  currentTagId.value = tagId
+  showTagDetail.value = true
+}
+
+/**
+ * 处理标签详情页面返回事件
+ */
+const handleTagDetailBack = () => {
+  showTagDetail.value = false
+  currentTagId.value = ''
+}
+
+
+
+/**
+ * 处理登出事件
+ */
+const handleLogout = () => {
+  localStorage.removeItem('isLoggedIn')
+  localStorage.removeItem('username')
+  window.dispatchEvent(new CustomEvent('logout'))
+}
+
+/**
  * 点击外部关闭下拉框
  * 提升用户体验，避免下拉框一直显示
  * @param event 点击事件
@@ -419,6 +489,20 @@ const handleClickOutside = (event: Event) => {
 }
 
 // ==================== 生命周期钩子 ====================
+
+// ==================== 监听器 ====================
+
+/**
+ * 监听侧边栏选择变化
+ * 当选择AI助手时显示AI助手页面
+ */
+watch(selectedSidebarItem, (newValue) => {
+  if (newValue === 'ai-assistant') {
+    showAIAssistant.value = true
+  } else {
+    showAIAssistant.value = false
+  }
+})
 
 /**
  * 组件挂载时添加全局点击事件监听
@@ -485,6 +569,11 @@ onUnmounted(() => {
 
 /* 文件夹图标样式 */
 .folder-icon {
+  color: #4f46e5; /* 主题色 */
+}
+
+/* AI图标样式 */
+.ai-icon {
   color: #4f46e5; /* 主题色 */
 }
 
@@ -741,6 +830,30 @@ onUnmounted(() => {
 .theme-toggle-btn:hover {
   background-color: #e2e8f0;
   border-color: #cbd5e1;
+}
+
+/* 登出按钮 */
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #ef4444;
+  border: 1px solid #ef4444;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* 登出按钮悬停效果 */
+.logout-btn:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 /* ==================== 主要内容区域样式 ==================== */

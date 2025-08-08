@@ -1,52 +1,18 @@
 <template>
   <div class="tags-grid" :class="{ dark: isDarkTheme }">
-    <div class="tag-card">
-      <div class="tag-color" style="background-color: #ef4444;"></div>
+    <div 
+      v-for="tag in tags" 
+      :key="tag.id" 
+      class="tag-card"
+      @click="handleTagClick(tag.id)"
+    >
+      <div class="tag-color" :style="{ backgroundColor: tag.color }"></div>
       <div class="tag-content">
-        <h3>重要项目</h3>
-        <p class="tag-count">15个文件</p>
+        <h3>{{ tag.name }}</h3>
+        <p class="tag-count">{{ tag.fileCount }}个文件</p>
       </div>
       <div class="tag-actions">
-        <button class="action-btn view-btn">查看</button>
-        <button class="action-btn edit-btn">修改</button>
-        <button class="action-btn delete-btn">删除</button>
-      </div>
-    </div>
-    
-    <div class="tag-card">
-      <div class="tag-color" style="background-color: #3b82f6;"></div>
-      <div class="tag-content">
-        <h3>工作文档</h3>
-        <p class="tag-count">42个文件</p>
-      </div>
-      <div class="tag-actions">
-        <button class="action-btn view-btn">查看</button>
-        <button class="action-btn edit-btn">修改</button>
-        <button class="action-btn delete-btn">删除</button>
-      </div>
-    </div>
-    
-    <div class="tag-card">
-      <div class="tag-color" style="background-color: #10b981;"></div>
-      <div class="tag-content">
-        <h3>个人资料</h3>
-        <p class="tag-count">8个文件</p>
-      </div>
-      <div class="tag-actions">
-        <button class="action-btn view-btn">查看</button>
-        <button class="action-btn edit-btn">修改</button>
-        <button class="action-btn delete-btn">删除</button>
-      </div>
-    </div>
-    
-    <div class="tag-card">
-      <div class="tag-color" style="background-color: #8b5cf6;"></div>
-      <div class="tag-content">
-        <h3>参考资料</h3>
-        <p class="tag-count">23个文件</p>
-      </div>
-      <div class="tag-actions">
-        <button class="action-btn view-btn">查看</button>
+        <button class="action-btn view-btn" @click.stop="handleTagClick(tag.id)">查看</button>
         <button class="action-btn edit-btn">修改</button>
         <button class="action-btn delete-btn">删除</button>
       </div>
@@ -55,16 +21,47 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
+// 定义标签接口
+interface TagItem {
+  id: string
+  name: string
+  color: string
+  fileCount: number
+}
+
 // 定义组件的属性接口
 interface Props {
   // 当前主题模式
   isDarkTheme?: boolean
 }
 
+// 定义组件的事件接口
+interface Emits {
+  (e: 'tag-click', tagId: string): void
+}
+
 // 定义组件的属性，设置默认值
 const props = withDefaults(defineProps<Props>(), {
   isDarkTheme: false
 })
+
+const emit = defineEmits<Emits>()
+
+// 标签数据
+const tags = ref<TagItem[]>([
+  { id: 'important', name: '重要项目', color: '#ef4444', fileCount: 15 },
+  { id: 'work', name: '工作文档', color: '#3b82f6', fileCount: 42 },
+  { id: 'personal', name: '个人资料', color: '#10b981', fileCount: 8 },
+  { id: 'reference', name: '参考资料', color: '#8b5cf6', fileCount: 23 }
+])
+
+// 处理标签点击
+const handleTagClick = (tagId: string) => {
+  console.log('标签被点击:', tagId)
+  emit('tag-click', tagId)
+}
 </script>
 
 <style scoped>
